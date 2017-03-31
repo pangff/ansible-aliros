@@ -1,0 +1,2 @@
+ - include: aliros-install.yml
+ - include: aliros-deploy.yml

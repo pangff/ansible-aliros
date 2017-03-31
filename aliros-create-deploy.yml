@@ -1,0 +1,23 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  roles:
+    - aliros-create-stack
+
+
+- hosts: ecsInstance
+  remote_user: root
+  roles:
+    - aliros-deploy-env
+
+
+- hosts: 127.0.0.1
+  remote_user: root
+  roles:
+    - alros-create-image
+
+
+- hosts: 127.0.0.1
+  connection: local
+  roles:
+    - aliros-delete-stack

@@ -1,0 +1,18 @@
+- name: create ecs image
+  aliros_create_image_module:
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+  register: resultCreateImage
+
+- debug: var=resultCreateImage
+
+- name: check image state
+  aliros_check_image_module:
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+    ImageId: "{{resultCreateImage.meta.result.ImageId}}"
+  register: resultImageState
+
+- debug: var=resultImageState

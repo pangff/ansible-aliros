@@ -1,0 +1,34 @@
+- name: Create Stack
+  aliros_create_stack_module:
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+  register: resultStack
+
+- debug: var=resultStack
+
+- name: get ecs instance ip
+  aliros_get_ecs_instance_ip_module:
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+  register: resultIp
+
+- debug: var=resultIp
+
+
+- name: wait 1.5 minute,ecs can ssh login with public ip
+  wait_for:
+    timeout: 90
+
+
+- name: add created instance Ip a new host
+  add_host:
+    name: "{{resultIp.meta.ip}}"
+    groups: ecsInstance
+
+- name: do ssh
+  command: "ssh root@{{resultIp.meta.ip}}"
+
+- name: use sshpass、ssh-copy-id set login ecs without user and password
+  command: "sshpass -p 'Password123' ssh-copy-id root@{{resultIp.meta.ip}}"

@@ -1,0 +1,54 @@
+- name: Make sure git is in place to clone source
+  become: true
+  apt:
+    name: git
+    state: latest
+
+- name: Install nvm
+  become: true
+  git:
+    repo: 'https://github.com/creationix/nvm.git'
+    dest: ~/.nvm
+    version: "{{nvmVersion}}"
+
+- name: Source NVM_NODEJS_ORG_MIRROR env in ~/.bash_profile
+  become: true
+  lineinfile: >
+    dest=~/.bash_profile
+    line="export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node"
+    create=yes
+
+- name: Source nvm in ~/.bash_profile
+  become: true
+  lineinfile: >
+    dest=~/.bash_profile
+    line="source ~/.nvm/nvm.sh"
+    create=yes
+
+- name: Install node {{ nodeVersion }}
+  become: true
+  command: "sudo -iu root nvm install {{ nodeVersion }}"
+  register: nvm_install_result
+
+- name: Check if {{ nodeVersion }} is the default node version
+  become: true
+  shell: sudo -iu root nvm ls | grep -e 'default -> {{ nodeVersion }}'
+  register: nvm_check_default
+  changed_when: False
+  ignore_errors: True
+
+- name: Set default node version to {{ nodeVersion }}
+  become: true
+  command: sudo -iu root nvm alias default {{ nodeVersion }}
+  when: nvm_check_default|failed
+
+- name: Make sure npm is in place
+  become: true
+  apt:
+    name: npm
+    state: latest
+
+- name: Install cnpm
+  become: true
+  command:  sudo -iu npm --registry=https://registry.npm.taobao.org install cnpm -g
+  ignore_errors: True

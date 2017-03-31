@@ -1,0 +1,10 @@
+- name: Delete Stack
+  aliros_delete_stack_module:
+    StackName: "{{resultStack.meta.result.Name}}"
+    StackId: "{{resultStack.meta.result.Id}}"
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+  register: resultDelete
+
+- debug: var=resultDelete

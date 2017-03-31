@@ -1,0 +1,6 @@
+- name: clone source code
+  git:
+    repo: 'https://github.com/pangff/gulp-build.git'
+    dest: /code/h5demo
+    version: master
+

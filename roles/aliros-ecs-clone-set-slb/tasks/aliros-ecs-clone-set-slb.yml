@@ -1,0 +1,11 @@
+- name: Create ecs clone Stack
+  aliros_check_ecs_group_stack_module:
+    AccessKeyID: "{{AccessKeyID}}"
+    AccessKeySecret: "{{AccessKeySecret}}"
+    RegionId: "{{RegionId}}"
+    SLBId: "{{SLBId}}"
+    EcsCount: "{{EcsCount}}"
+  register: resultEcsCloneStack
+
+- debug: var=resultEcsCloneStack
+

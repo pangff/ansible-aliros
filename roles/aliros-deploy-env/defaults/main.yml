@@ -1,0 +1,6 @@
+---
+  AccessKeyID: "xxxxxx"
+  AccessKeySecret: "xxxxx"
+  RegionId: "cn-beijing"
+  nvmVersion: "v0.33.1"
+  nodeVersion: "v7.5.0"

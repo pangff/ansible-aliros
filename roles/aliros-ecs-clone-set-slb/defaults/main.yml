@@ -1,0 +1,6 @@
+---
+  AccessKeyID: "xxx"
+  AccessKeySecret: "xxx"
+  RegionId: "xxx"
+  SLBId: "lb-xxxx"
+  EcsCount: "xxx"
